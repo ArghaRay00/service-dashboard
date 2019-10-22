@@ -1,0 +1,23 @@
+<div class="container">
+ 
+          <h2 class="example-h2">Radius</h2>
+      
+          <mat-slider
+              class="example-margin"
+              [disabled]="disabled"
+              [invert]="invert"
+              [max]="max"
+              [min]="min"
+              [step]="step"
+              [thumbLabel]="thumbLabel"
+              [tickInterval]="tickInterval"
+              [(ngModel)]="value"
+              [vertical]="vertical">
+          </mat-slider>
+     <h4>You selected {{value}} Radius</h4>
+      <h5>Id is {{data.id}}</h5>
+     <button mat-button color="primary" (click)="Search()">
+        Assign Service Men
+       </button>
+      
+</div>
