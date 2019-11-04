@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators'
 
 
 @Injectable()
-export class DataService {
+export class DataService  {
   
   private readonly YELP_URL='https://iot-based-home-warranty.azurewebsites.net/api/ConsumerRequest/GetYelpResponse'
   private readonly ALL_REQUESTS= 'https://iot-based-home-warranty.azurewebsites.net/api/ConsumerRequest/getallrequests';
@@ -15,6 +15,7 @@ export class DataService {
   // Temporarily stores data from dialogs
   dialogData: any;
   result :any;
+  requestArray :ServiceRequest[] =[];
 
   constructor (private httpClient: HttpClient) {
   }
@@ -31,6 +32,8 @@ export class DataService {
   getAllIssues(): void {
     this.getAllServiceRequests().subscribe(data => {
         this.dataChange.next(data);
+        this.requestArray = data as ServiceRequest[];
+        localStorage.setItem('source',JSON.stringify(this.requestArray));
       },
       (error: HttpErrorResponse) => {
       console.log (error.name + ' ' + error.message);
@@ -38,8 +41,9 @@ export class DataService {
   }
   
    getAllServiceRequests() : Observable<ServiceRequest[]>{
-  return  this.httpClient.get<ServiceRequest[]>(this.ALL_REQUESTS);
-}
+    return this.httpClient.get<ServiceRequest[]>(this.ALL_REQUESTS);
+    }
+
 
 
   // DEMO ONLY, you can find working methods below
@@ -73,6 +77,14 @@ export class DataService {
           return err;
         }
       ));
+  }
+
+  getRequestByRequestId(id :number) : ServiceRequest[]
+  {
+     let ss = JSON.parse(localStorage.getItem('source'));
+     let result =[];
+      result =ss.filter( request =>  request.requestId === id);
+    return result;
   }
 
 

@@ -60,13 +60,17 @@ export class AppComponent implements OnInit {
   //   });
   // }
 
-  startEdit(i: number, id: number, name: string,  deviceName: string, policy: string) {
-    this.id = id;
+  startEdit(i: number, id: number, name: string,  images: string[], policy: string) {
+  
+    let request=this.dataService.getRequestByRequestId(id);
+ 
+    // this.id = id;
     // index row is used just for debugging proposes and can be removed
-    this.index = i;
-    console.log(this.index);
+    // this.index = i;
     const dialogRef = this.dialog.open(EditDialogComponent, {
-      data: {id: id, name: name,  deviceName: deviceName, policy: policy}
+      data: {serviceRequest : request[0]},
+      height: '600px',
+      width: '600px'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -74,7 +78,7 @@ export class AppComponent implements OnInit {
         // When using an edit things are little different, firstly we find record inside DataService by id
         const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.requestId === this.id);
         // Then you update that record using data from dialogData (values you enetered)
-        this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
+        // this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
         // And lastly refresh table
         this.refreshTable();
       }

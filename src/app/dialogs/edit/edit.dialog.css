@@ -17,3 +17,15 @@
   font-size: 16px;
   flex-grow: 1;
 }
+
+.example-card {
+  margin: 2%;
+  font-family: 'Quicksand', sans-serif;
+
+}
+.cards {
+  width: 400px;
+}
+.mat-card-image{
+  width: 200px;
+}
