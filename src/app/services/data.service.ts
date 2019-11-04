@@ -4,15 +4,17 @@ import {Issue,ServiceRequest} from '../models/issue';
 import {HttpClient, HttpErrorResponse,HttpHeaders,HttpResponse} from '@angular/common/http';
 import {map} from 'rxjs/operators'
 
+
 @Injectable()
 export class DataService {
-
+  
   private readonly YELP_URL='https://iot-based-home-warranty.azurewebsites.net/api/ConsumerRequest/GetYelpResponse'
   private readonly ALL_REQUESTS= 'https://iot-based-home-warranty.azurewebsites.net/api/ConsumerRequest/getallrequests';
 
   dataChange: BehaviorSubject<ServiceRequest[]> = new BehaviorSubject<ServiceRequest[]>([]);
   // Temporarily stores data from dialogs
   dialogData: any;
+  result :any;
 
   constructor (private httpClient: HttpClient) {
   }
@@ -35,12 +37,10 @@ export class DataService {
       });
   }
   
-  getAllServiceRequests() : Observable<ServiceRequest[]>{
-    let ELEMENT_DATA: ServiceRequest[] = [
-      {name: 'Ray', policy: 'BJLPR6976B',deviceName: 'Human',description : 'Not Working',profilePicture : 'https:\/\/randomuser.me\/api\/portraits\/men\/80.jpg', id: 12131,email :'reachout_argha@outlook.com',deviceImages:[]},
-    ];
-    return of(ELEMENT_DATA); 
-  }
+   getAllServiceRequests() : Observable<ServiceRequest[]>{
+  return  this.httpClient.get<ServiceRequest[]>(this.ALL_REQUESTS);
+}
+
 
   // DEMO ONLY, you can find working methods below
   addIssue (issue: Issue): void {

@@ -11,16 +11,37 @@ export class Issue {
 
 
 export class ServiceRequest{
-  id:number;
-  name:string;
-  email:string;
-  profilePicture: string;
-  policy: string;
-  deviceName: string;
-  deviceImages:string[];
-  description:string;
+  // id:number;
+  // name:string;
+  // email:string;
+  // profilePicture: string;
+  // policy: string;
+  // deviceName: string;
+  // deviceImages:string[];
+  // description:string;
+  requestId: number;
+  consumer : Consumer;
+  appliance : Appliance;
+  service :string;
+  requestDescription :string;
+  images : [];
+  appointmentDateTime :string;
+  policy:string;
+  profilePicture :string;
 }
 
+export class Consumer{
+  consumerId :number;
+  consumerName:string;
+  propertyAdrress: string;
+  lat: string;
+  long:string;
+}
+export class Appliance{
+  applianceId:number;
+  applianceName :string;
+
+}
 
 // export class Profile{
 //   name:string;
@@ -32,3 +53,23 @@ export class ServiceRequest{
 //   deviceImage:string;
 //   description:string;
 // }
+
+// [
+//   {
+//     "requestId": 1,
+//     "consumer": {
+//       "consumerId": 1,
+//       "consumerName": "Nikhil",
+//       "propertyAdrress": "Property Address 1",
+//       "lat": "37.786882",
+//       "long": "-122.399972"
+//     },
+//     "appliance": {
+//       "applianceId": 1,
+//       "applianceName": "Air Conditioner"
+//     },
+//     "service": null,
+//     "requestDescription": "aa",
+//     "images": [],
+//     "appointmentDateTime": "2019-11-16T16:36:26.566+05:30"
+//   },

@@ -41,6 +41,8 @@ export class AppComponent implements OnInit {
     this.loadData();
   }
 
+
+
   // yelpResponse(issue: Issue) {
   //   this.dataService.getYelpResponse('9-MHkxmkWfiXY_4TcXyGjlgMlvwYF_qJWQ5l8G5BZlPGCN5zRLP-kMyfzwDMwk928PkkBP9s_n7YAzRvWu0UIZHUr5k6YMJjWjRDP0D0EU7uxOj_ir7zCqOzH2WjXXYx').subscribe(data =>{
   //     console.log(data);
@@ -70,7 +72,7 @@ export class AppComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         // When using an edit things are little different, firstly we find record inside DataService by id
-        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.requestId === this.id);
         // Then you update that record using data from dialogData (values you enetered)
         this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
         // And lastly refresh table
@@ -178,7 +180,7 @@ export class ExampleDataSource extends DataSource<ServiceRequest> {
     return merge(...displayDataChanges).pipe(map( () => {
         // Filter data
         this.filteredData = this._exampleDatabase.data.slice().filter((serviceRequest: ServiceRequest) => {
-          const searchStr = (serviceRequest.id + serviceRequest.name + serviceRequest.deviceName + serviceRequest.policy).toLowerCase();
+          const searchStr = (serviceRequest.requestId + serviceRequest.consumer.consumerName + serviceRequest.appliance.applianceName + serviceRequest.policy).toLowerCase();
           return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
         });
 
@@ -207,9 +209,9 @@ export class ExampleDataSource extends DataSource<ServiceRequest> {
       let propertyB: number | string = '';
 
       switch (this._sort.active) {
-        case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
-        case 'name': [propertyA, propertyB] = [a.name, b.name]; break;
-        case 'deviceName': [propertyA, propertyB] = [a.deviceName, b.deviceName]; break;
+        case 'id': [propertyA, propertyB] = [a.requestId, b.requestId]; break;
+        case 'name': [propertyA, propertyB] = [a.consumer.consumerName, b.consumer.consumerName]; break;
+        case 'deviceName': [propertyA, propertyB] = [a.appliance.applianceName, b.appliance.applianceName]; break;
         case 'policy': [propertyA, propertyB] = [a.policy, b.policy]; break;
     
       }
