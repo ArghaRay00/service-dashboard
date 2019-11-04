@@ -1,12 +1,14 @@
 
 <mat-toolbar color="primary">
   <span style="float:left"><img src="../assets/image.png" style="height: 150px; width: 200px;"></span>
+
   <span><h2>DashBoard Tech Talk X</h2></span>
   <span class="spacer"></span>
   Reload data:
   <button mat-icon-button (click)="refresh()">
     <mat-icon>refresh</mat-icon>
   </button>
+
 </mat-toolbar>
 
 <div class="container mat-elevation-z8">
@@ -25,22 +27,22 @@
     <!-- ID Column -->
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-      <mat-cell *matCellDef="let row" >{{row.id}}</mat-cell>
+      <mat-cell *matCellDef="let row" >{{row.requestId}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-      <mat-cell *matCellDef="let row"><img [src]="row.profilePicture" style="border-radius: 75%; width:50px; height: 50px; "/>{{row.name}} {{row.email}}</mat-cell>
+      <mat-cell *matCellDef="let row"><img src="https:\/\/randomuser.me\/api\/portraits\/men\/70.jpg" style="border-radius: 75%; width:50px; height: 50px; "/>{{row.consumer.consumerName}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="deviceName"> 
       <mat-header-cell *matHeaderCellDef mat-sort-header>deviceName</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.deviceName}}</mat-cell>
+      <mat-cell *matCellDef="let row"> {{row.appliance.applianceName}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="policy">
       <mat-header-cell *matHeaderCellDef mat-sort-header>policy</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.policy}}</mat-cell>
+      <mat-cell *matCellDef="let row"> XXXXXX</mat-cell>
     </ng-container>
 <!-- 
     <ng-container matColumnDef="created_at">
@@ -64,6 +66,8 @@
         <button mat-button color="primary" (click)="ConnectToYelp(i, row.id, row.name,  row.deviceName, row.policy)">
            Assign Service Men
           </button>
+
+   
       </mat-cell>
     </ng-container> 
 
