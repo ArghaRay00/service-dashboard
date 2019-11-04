@@ -43,7 +43,7 @@
 
 .mat-cell:nth-child(2),
 .mat-header-cell:nth-child(2){
-  flex: 0 0 10%;
+  flex: 0 0 12%;
 }
 
 .mat-cell:nth-child(3),
@@ -67,3 +67,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Quicksand', sans-serif;
   font-weight: 500;
  }
+
+.mat-table{
+  font-family: 'Quicksand', sans-serif;
+}

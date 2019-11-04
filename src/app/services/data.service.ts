@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable,from,of} from 'rxjs';
-import {Issue,ServiceRequest} from '../models/issue';
+import {Issue,ServiceRequest, yelpResponse} from '../models/issue';
 import {HttpClient, HttpErrorResponse,HttpHeaders,HttpResponse} from '@angular/common/http';
 import {map} from 'rxjs/operators'
 
@@ -60,15 +60,16 @@ export class DataService  {
   }
 
   //passing auth token directly instead of having a http interceptor as we dont have time
-  getYelpResponse(id ?:number, lat? : number,long? : number,radius? : number ,term? :string) {
+  getYelpResponse(radius :number,lat  :string ="37.786882", long :string ="-122.399972", applianceName :string ="Air Conditioner") {
+    console.log(radius);
     const data = {
-      'lat': 37.786882
-      ,'long': -122.399972 
-      ,'radius': 10000
-      ,'term': "washing machine repair" 
+      'lat': lat
+      ,'long': long 
+      ,'radius': radius
+      ,'term': applianceName
       }
       const headers= {headers : new HttpHeaders().set('Content-Type', 'application/json')};
-      return this.httpClient.post<JSON>(this.YELP_URL, data, headers).pipe(map(
+      return this.httpClient.post<yelpResponse>(this.YELP_URL, data, headers).pipe(map(
       res => {
           //TODO Map
         return res;

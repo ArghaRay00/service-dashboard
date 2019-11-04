@@ -41,32 +41,9 @@ export class AppComponent implements OnInit {
     this.loadData();
   }
 
-
-
-  // yelpResponse(issue: Issue) {
-  //   this.dataService.getYelpResponse('9-MHkxmkWfiXY_4TcXyGjlgMlvwYF_qJWQ5l8G5BZlPGCN5zRLP-kMyfzwDMwk928PkkBP9s_n7YAzRvWu0UIZHUr5k6YMJjWjRDP0D0EU7uxOj_ir7zCqOzH2WjXXYx').subscribe(data =>{
-  //     console.log(data);
-  //   });
-  // }
-    
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result === 1) {
-  //       // After dialog is closed we're doing frontend updates
-  //       // For add we're just pushing a new row inside DataService
-  //       this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
-  //       this.refreshTable();
-  //     }
-  //   });
-  // }
-
   startEdit(i: number, id: number, name: string,  images: string[], policy: string) {
   
     let request=this.dataService.getRequestByRequestId(id);
- 
-    // this.id = id;
-    // index row is used just for debugging proposes and can be removed
-    // this.index = i;
     const dialogRef = this.dialog.open(EditDialogComponent, {
       data: {serviceRequest : request[0]},
       height: '600px',
@@ -75,62 +52,31 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        // When using an edit things are little different, firstly we find record inside DataService by id
         const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.requestId === this.id);
-        // Then you update that record using data from dialogData (values you enetered)
-        // this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
-        // And lastly refresh table
         this.refreshTable();
       }
     });
   }
 
-  ConnectToYelp(i: number, id: number, name: string,  deviceName: string, policy: string) {
+  ConnectToYelp(i: number, id: number) {
+    let request=this.dataService.getRequestByRequestId(id);
     this.index = i;
     this.id = id;
     const dialogRef = this.dialog.open(AddDialogComponent, {
-      data: {id: id, name: name, deviceName: deviceName, policy: policy},
-      height: '400px',
-      width: '600px'
+      data: {id: id, serviceRequest : request[0] },
+      height: '100vh',
+      width: '100vw'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        // const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
-        // // for delete we use splice in order to remove single object from DataService
-        // this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
-        // this.refreshTable();
-      }
     });
   }
 
 
   private refreshTable() {
-    // Refreshing table using paginator
-    // Thanks yeager-j for tips
-    // https://github.com/marinantonio/angular-mat-table-crud/issues/12
     this.paginator._changePageSize(this.paginator.pageSize);
   }
-
-
-  /*   // If you don't need a filter or a pagination this can be simplified, you just use code from else block
-    // OLD METHOD:
-    // if there's a paginator active we're using it for refresh
-    if (this.dataSource._paginator.hasNextPage()) {
-      this.dataSource._paginator.nextPage();
-      this.dataSource._paginator.previousPage();
-      // in case we're on last page this if will tick
-    } else if (this.dataSource._paginator.hasPreviousPage()) {
-      this.dataSource._paginator.previousPage();
-      this.dataSource._paginator.nextPage();
-      // in all other cases including active filter we do it like this
-    } else {
-      this.dataSource.filter = '';
-      this.dataSource.filter = this.filter.nativeElement.value;
-    }*/
-
-
-
+  
   public loadData() {
     this.exampleDatabase = new DataService(this.httpClient);
     this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);

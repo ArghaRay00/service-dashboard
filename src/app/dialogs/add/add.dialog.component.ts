@@ -2,8 +2,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {Component, Inject} from '@angular/core';
 import {DataService} from '../../services/data.service';
 import {FormControl, Validators} from '@angular/forms';
-import {ServiceRequest} from '../../models/issue';
-import { Observable } from 'rxjs';
+import {ServiceRequest, yelpResponse, businesses} from '../../models/issue';
+import { _finally } from 'rxjs/operator/finally';
 
 @Component({
   selector: 'app-add.dialog',
@@ -13,6 +13,9 @@ import { Observable } from 'rxjs';
 
 
 export class AddDialogComponent {
+business : businesses;
+businessArray :businesses[]=[];
+serviceData : yelpResponse;
 autoTicks = false;
 disabled = false;
 invert = false;
@@ -23,10 +26,10 @@ step = 1;
 thumbLabel = true;
 value = 0;
 vertical = false;
+loading : Boolean =false;
   constructor(public dialogRef: MatDialogRef<AddDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: ServiceRequest,
-              public dataService: DataService) {
-
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              public dataService: DataService) {      
                }
 
   formControl = new FormControl('', [
@@ -48,10 +51,18 @@ vertical = false;
     this.dialogRef.close();
   }
 
-  Search(){
-    this.dataService.getYelpResponse().subscribe(data => {
-      console.log(data)
-    });
+  Search(index:number,radius :number =10000){
+
+    this.dataService.getYelpResponse(radius,this.data.serviceRequest.consumer.lat,this.data.serviceRequest.consumer.long,this.data.serviceRequest.appliance.applianceName).subscribe(data  => {
+      this.serviceData =data;
+    },
+    err => {
+      console.log(err);
+    },
+    ()=>{
+    }
+    );
+  
   }
   // public confirmAdd(): void {
   //   this.dataService.addIssue(this.data);

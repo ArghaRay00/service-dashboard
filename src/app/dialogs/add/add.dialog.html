@@ -16,8 +16,36 @@
           </mat-slider>
      <h4>You selected {{value}} Radius</h4>
       <h5>Id is {{data.id}}</h5>
-     <button mat-button color="primary" (click)="Search()">
-        Assign Service Men
-       </button>
-      
+
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Name</th>
+            <th>Rating</th>
+            <th>Phone</th>
+            <th>Location</th>
+            <th>Distance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of serviceData.businesses;let i = index;">
+            <td><img [src]="data.image_url" style="border-radius: 75%; width:50px; height: 50px; padding: 10px;"/></td>
+            <td>{{data.name}}</td>
+            <td>{{ data.rating }}</td>
+            <td>{{ data.display_phone }}</td>
+            <td>{{ data.location.city }}</td>
+            <td>{{ data.distance }}</td>
+            <td>
+                <div style="text-align:center">
+                    <button mat-raised-button color="primary" (click)="Search(i)" [id]="i"> Book</button>
+                  </div>  
+                </td>
+          </tr>
+        </tbody>
+    </table>
+
+    <div style="text-align:center">
+        <button mat-raised-button color="primary"  (click)="Search()" id="yelpService" type="submit"> Call Yelp Service</button>
+      </div>   
 </div>
