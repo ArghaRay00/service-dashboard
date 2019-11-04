@@ -18,6 +18,7 @@ import {EditDialogComponent} from './dialogs/edit/edit.dialog.component';
 import {DeleteDialogComponent} from './dialogs/delete/delete.dialog.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
   ],
   imports: [
+    Ng2SmartTableModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

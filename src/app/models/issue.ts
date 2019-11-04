@@ -43,6 +43,32 @@ export class Appliance{
 
 }
 
+export class yelpResponse{
+  businesses : businesses[];
+}
+
+export class businesses{
+  image_url : string;
+  display_phone :string;
+  rating :number;
+  coordinates : coordinates;
+  name:string;
+  distance :number;
+  location : location;
+}
+export class coordinates{
+  latitude :string;
+  longitude :string;
+}
+export class location{
+ country :string;
+ address2 :string;
+ address1:string;
+ state:string;
+ zip_code:string;
+ address3 :string;
+ city: string;
+}
 // export class Profile{
 //   name:string;
 //   email:string;

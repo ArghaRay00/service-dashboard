@@ -32,7 +32,7 @@
 
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-      <mat-cell *matCellDef="let row"><img src="https:\/\/randomuser.me\/api\/portraits\/men\/70.jpg" style="border-radius: 75%; width:50px; height: 50px; "/>{{row.consumer.consumerName}} </mat-cell>
+      <mat-cell *matCellDef="let row"><img [src]="row.consumer.profilePictureUrl" style="border-radius: 75%; width:50px; height: 50px; padding: 10px; "/>{{row.consumer.consumerName}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="deviceName"> 
@@ -67,7 +67,7 @@
         <!-- <button mat-icon-button color="accent" (click)="startEdit(i, row.id, row.name,  row.deviceName, row.policy)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button> -->
-        <button mat-button color="primary" (click)="ConnectToYelp(i, row.requestId, row.name,  row.deviceName, row.policy)">
+        <button mat-button color="primary" (click)="ConnectToYelp(i, row.requestId)">
            Assign Service Men
           </button>
       
