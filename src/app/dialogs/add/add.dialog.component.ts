@@ -1,9 +1,11 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {DataService} from '../../services/data.service';
 import {FormControl, Validators} from '@angular/forms';
-import {ServiceRequest, yelpResponse, businesses} from '../../models/issue';
+import {ServiceRequest, yelpResponse, businesses, yelpRequest} from '../../models/issue';
 import { _finally } from 'rxjs/operator/finally';
+import {DeleteDialogComponent} from '../delete/delete.dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add.dialog',
@@ -12,24 +14,32 @@ import { _finally } from 'rxjs/operator/finally';
 })
 
 
-export class AddDialogComponent {
+export class AddDialogComponent implements OnInit {
 business : businesses;
 businessArray :businesses[]=[];
 serviceData : yelpResponse;
 autoTicks = false;
 disabled = false;
 invert = false;
-max = 1000;
-min = 0;
+max = 10000;
+min = 500;
 showTicks = false;
 step = 1;
 thumbLabel = true;
-value = 0;
+value = 500;
 vertical = false;
 loading : Boolean =false;
+requestId : number =0;
+yelpRequest :yelpRequest;
   constructor(public dialogRef: MatDialogRef<AddDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              public dataService: DataService) {      
+              public dataService: DataService, public dialog: MatDialog,) {    
+                this.requestId =data.id;
+                this.yelpRequest =new yelpRequest();  
+                this.yelpRequest.radius = 200;
+                this.yelpRequest.lat = this.data.serviceRequest.consumer.lat;
+                this.yelpRequest.long=this.data.serviceRequest.consumer.long
+                this.yelpRequest.applianceName= this.data.serviceRequest.appliance.applianceName//Default
                }
 
   formControl = new FormControl('', [
@@ -46,14 +56,18 @@ loading : Boolean =false;
   submit() {
   // emppty stuff
   }
+  ngOnInit() {
+  this.Search(500); //Default Value
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  Search(index:number,radius :number =10000){
-
-    this.dataService.getYelpResponse(radius,this.data.serviceRequest.consumer.lat,this.data.serviceRequest.consumer.long,this.data.serviceRequest.appliance.applianceName).subscribe(data  => {
+  Search(value :number){
+    this.yelpRequest.radius =value;
+    this.dataService.getYelpResponse(this.yelpRequest.radius,this.yelpRequest.lat,this.yelpRequest.long,this.yelpRequest.applianceName).subscribe(data  => {
+      console.log(JSON.stringify(this.yelpRequest));
       this.serviceData =data;
     },
     err => {
@@ -64,9 +78,15 @@ loading : Boolean =false;
     );
   
   }
-  // public confirmAdd(): void {
-  //   this.dataService.addIssue(this.data);
-  // }
 
-
+assignServicePerson(data :any){
+console.log(data);
+    this.dataService.assignServicePerson( this.requestId,data.name,data.location.city,data.display_phone).subscribe(data=>{
+      console.log('inside assignServicePerson='+data);
+      const dialogRef = this.dialog.open(DeleteDialogComponent, {
+        height: '50vh',
+        width: '50vw'
+      });
+    }) 
+  }
 }

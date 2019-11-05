@@ -15,7 +15,6 @@
               [vertical]="vertical">
           </mat-slider>
      <h4>You selected {{value}} Radius</h4>
-      <h5>Id is {{data.id}}</h5>
 
       <table>
         <thead>
@@ -38,7 +37,7 @@
             <td>{{ data.distance }}</td>
             <td>
                 <div style="text-align:center">
-                    <button mat-raised-button color="primary" (click)="Search(i)" [id]="i"> Book</button>
+                    <button mat-raised-button color="primary" (click)="assignServicePerson(data)" [id]="i"> Book</button>
                   </div>  
                 </td>
           </tr>
@@ -46,6 +45,6 @@
     </table>
 
     <div style="text-align:center">
-        <button mat-raised-button color="primary"  (click)="Search()" id="yelpService" type="submit"> Call Yelp Service</button>
+        <button mat-raised-button color="primary"  (click)="Search(value)" id="yelpService" type="submit"> Call Yelp Service</button>
       </div>   
 </div>

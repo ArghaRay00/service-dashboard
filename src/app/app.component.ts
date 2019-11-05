@@ -8,7 +8,7 @@ import {Issue, ServiceRequest} from './models/issue';
 import {DataSource} from '@angular/cdk/collections';
 import {AddDialogComponent} from './dialogs/add/add.dialog.component';
 import {EditDialogComponent} from './dialogs/edit/edit.dialog.component';
-import {DeleteDialogComponent} from './dialogs/delete/delete.dialog.component';
+
 import {BehaviorSubject, fromEvent, merge, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -19,7 +19,7 @@ import {map} from 'rxjs/operators';
 })
 
 export class AppComponent implements OnInit {
-  displayedColumns = ['id', 'name', 'deviceName', 'policy', 'actions'];
+  displayedColumns = ['id', 'name', 'Appliance Name', 'AppointmentDateTime', 'actions'];
   exampleDatabase: DataService | null;
   dataSource: ExampleDataSource | null;
   index: number;
@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
     this.loadData();
   }
 
-  startEdit(i: number, id: number, name: string,  images: string[], policy: string) {
+  startEdit(i: number, id: number, name: string,  images: string[], AppointmentDateTime: string) {
   
     let request=this.dataService.getRequestByRequestId(id);
     const dialogRef = this.dialog.open(EditDialogComponent, {
@@ -130,7 +130,7 @@ export class ExampleDataSource extends DataSource<ServiceRequest> {
     return merge(...displayDataChanges).pipe(map( () => {
         // Filter data
         this.filteredData = this._exampleDatabase.data.slice().filter((serviceRequest: ServiceRequest) => {
-          const searchStr = (serviceRequest.requestId + serviceRequest.consumer.consumerName + serviceRequest.appliance.applianceName + serviceRequest.policy).toLowerCase();
+          const searchStr = (serviceRequest.requestId + serviceRequest.consumer.consumerName + serviceRequest.appliance.applianceName + serviceRequest.appointmentDateTime).toLowerCase();
           return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
         });
 
@@ -161,8 +161,8 @@ export class ExampleDataSource extends DataSource<ServiceRequest> {
       switch (this._sort.active) {
         case 'id': [propertyA, propertyB] = [a.requestId, b.requestId]; break;
         case 'name': [propertyA, propertyB] = [a.consumer.consumerName, b.consumer.consumerName]; break;
-        case 'deviceName': [propertyA, propertyB] = [a.appliance.applianceName, b.appliance.applianceName]; break;
-        case 'policy': [propertyA, propertyB] = [a.policy, b.policy]; break;
+        case 'Appliance Name': [propertyA, propertyB] = [a.appliance.applianceName, b.appliance.applianceName]; break;
+        case 'AppointmentDateTime': [propertyA, propertyB] = [a.appointmentDateTime, b.appointmentDateTime]; break;
     
       }
 

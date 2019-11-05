@@ -10,6 +10,7 @@ export class DataService  {
   
   private readonly YELP_URL='https://iot-based-home-warranty.azurewebsites.net/api/ConsumerRequest/GetYelpResponse'
   private readonly ALL_REQUESTS= 'https://iot-based-home-warranty.azurewebsites.net/api/ConsumerRequest/getallrequests';
+  private readonly AssignServiceMen= 'https://iot-based-home-warranty.azurewebsites.net/api/ConsumerRequest/AssignService';
 
   dataChange: BehaviorSubject<ServiceRequest[]> = new BehaviorSubject<ServiceRequest[]>([]);
   // Temporarily stores data from dialogs
@@ -60,8 +61,8 @@ export class DataService  {
   }
 
   //passing auth token directly instead of having a http interceptor as we dont have time
-  getYelpResponse(radius :number,lat  :string ="37.786882", long :string ="-122.399972", applianceName :string ="Air Conditioner") {
-    console.log(radius);
+  getYelpResponse(radius :number,lat  :string , long :string , applianceName :string) {
+    console.log('inside getYelpResponse service='+radius+lat+long+applianceName);
     const data = {
       'lat': lat
       ,'long': long 
@@ -88,6 +89,25 @@ export class DataService  {
     return result;
   }
 
+  assignServicePerson(requestId :number,serviceVendorName:string,location:string,contactNumber:string){
+    const data = {
+      'serviceVendorName': serviceVendorName
+      ,'location': location 
+      ,'contactNumber': contactNumber
+      ,'requestId': requestId
+      }
+      console.log(JSON.stringify(data));
+      const headers= {headers : new HttpHeaders().set('Content-Type', 'application/json')};
+      return this.httpClient.post(this.AssignServiceMen, data, headers).pipe(map(
+      res => {
+          //TODO Map
+        return res;
+        },
+        err => {
+          return err;
+        }
+      ));
+  }
 
 }
 

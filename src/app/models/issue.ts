@@ -69,6 +69,14 @@ export class location{
  address3 :string;
  city: string;
 }
+
+
+export class yelpRequest{
+radius: number;
+lat :string;
+long: string;
+applianceName :string;
+}
 // export class Profile{
 //   name:string;
 //   email:string;
