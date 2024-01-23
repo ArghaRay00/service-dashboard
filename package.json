@@ -28,7 +28,7 @@
     "ng2-completer": "^3.0.2",
     "ng2-smart-table": "^1.5.0",
     "rxjs": "^6.5.2",
-    "rxjs-tslint": "^0.1.7",
+    "rxjs-tslint": "^0.1.8",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },
@@ -43,7 +43,7 @@
     "codelyzer": "^5.0.1",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "^4.2.0",
+    "karma": "^6.4.2",
     "karma-chrome-launcher": "~3.0.0",
     "karma-cli": "~2.0.0",
     "karma-coverage-istanbul-reporter": "^2.0.6",
